@@ -178,9 +178,9 @@ public class DragTopLayout extends FrameLayout {
         dragRange = getHeight();
 
         // In case of resetting the content top to target position before sliding.
-        int contentTopTemp = contentTop;
         resetTopViewHeight();
         resetContentHeight();
+        int contentTopTemp = contentTop;
 
         topView.layout(left, Math.min(topView.getPaddingTop(), contentTop - topViewHeight), right,
                 contentTop);
@@ -330,6 +330,10 @@ public class DragTopLayout extends FrameLayout {
             super.onViewReleased(releasedChild, xvel, yvel);
             // yvel > 0 Fling down || yvel < 0 Fling up
             int top;
+
+            if (yvel == 0)
+                return;
+
             if (yvel > 0 || contentTop > topViewHeight) {
                 top = topViewHeight + getPaddingTop();
             } else {
